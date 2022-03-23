@@ -58,9 +58,11 @@ array.forEach(element => {
     arrayGeneral.push(element);
 });
 
-arrayGeneral.forEach(e => {
+let id = 1;
 
-});
+for (const i in arrayGeneral) {
+    arrayGeneral[i].id = i;
+}
 
 arrayGeneral.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
 

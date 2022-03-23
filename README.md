@@ -1,2 +1,0 @@
-# cursos
- Capacitacion de Reactjs

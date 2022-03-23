@@ -16,7 +16,24 @@ const newArr = [...arr, 'React']; // Agrega el nuevo elemento al final del arreg
 
 const newArr2 = ['React', ...arr]; // Agrega el nuevo elemento al inicio del arreglo sin modificar el arreglo original
 
-// Correccion de la practica
+// Eliminar elementos a un array
+
+arr.pop(); //Elimina al final del arreglo el nuevo valor
+
+arr.shift(); //Elimina al inicio del arreglo el nuevo valor
+
+arr.splice(1, 1); //Elimina (x, y), a partir de x y hasta y cantidad de elementos
+
+
+// * pop, shift y splice no se deben usar ya que modifican el arreglo original
+
+// La forma correcta de eliminar/buscar elementos en un array
+
+const delArr = arr.filter(d => {
+    return d !== 'React';
+});
+
+// Reemplazar elementos de un array
 
 const array = [
     { id: 12, nombre: "Restaurante3", ventas: 4112, FAlta: " 2004 - 04 - 15T00: 00 " },
@@ -38,7 +55,13 @@ const array = [
 const arrayGeneral = [...array];
 
 array.forEach(element => {
-    arrayGeneral.push(array);
+    arrayGeneral.push(element);
 });
+
+arrayGeneral.forEach(e => {
+
+});
+
+arrayGeneral.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
 
 console.table(arrayGeneral);

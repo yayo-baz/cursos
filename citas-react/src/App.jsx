@@ -1,15 +1,20 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import Header from './components/Header'
+import Formulario from './components/Formulario'
+import ListadoPacientes from './components/ListadoPacientes'
 import './App.css'
 
 function App() {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Consultas en React</h1>
-      </header>
-    </div>
+    <>
+      <div className="container mx-auto mt-20">
+        <Header />
+        <div className="mt-12 md:flex">
+          <Formulario />
+          <ListadoPacientes />
+        </div>
+      </div>
+    </>
   )
 }
 

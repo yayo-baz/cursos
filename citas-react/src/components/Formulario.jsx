@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
+import Error from "./Error";
 
-const Formulario = () => {
+const Formulario = ({ pacientes, setPacientes }) => {
 
     const [usuario, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -8,10 +9,40 @@ const Formulario = () => {
     const [alta, setAlta] = useState('');
     const [sintomas, setSintomas] = useState('');
 
+    const [error, setError] = useState(false);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('Enviando formulario');
+        if ([usuario, email, derechohabiente, alta, sintomas].includes('')) {
+            return setError(true);
+        }
+
+        setError(false);
+
+        const generarId = () => {
+            const random = Math.random().toString(36).substring(2);
+            const date = Date.now().toString(36);
+
+            return random + date;
+        }
+
+        const objPacientes = {
+            id: generarId(),
+            usuario,
+            email,
+            derechohabiente,
+            alta,
+            sintomas
+        }
+
+        setPacientes([...pacientes, objPacientes]);
+
+        setNombre('');
+        setEmail('');
+        setDerechohabiente('');
+        setAlta('');
+        setSintomas('');
     }
 
     return (
@@ -73,6 +104,7 @@ const Formulario = () => {
                         placeholder="Síntomas del paciente"
                         value={sintomas} onChange={(e) => setSintomas(e.target.value)}
                     />
+                    {error && <Error><p>* Debes llenar todos los campos</p></Error>}
                 </div>
                 <input
                     className="w-full bg-indigo-600 p-2 my-2 hover:bg-indigo-800 rounded-lg text-white cursor-pointer"

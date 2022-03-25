@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Error from "./Error";
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
     const [usuario, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -11,15 +11,30 @@ const Formulario = ({ pacientes, setPacientes }) => {
 
     const [error, setError] = useState(false);
 
+    useEffect(() => {
+        if (Object.keys(paciente).length > 0) {
+            setNombre(paciente.usuario)
+            setEmail(paciente.email)
+            setDerechohabiente(paciente.derechohabiente)
+            setAlta(paciente.alta)
+            setSintomas(paciente.sintomas)
+        }
+    }, [paciente])
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        //Valida que los campos esten llenos
         if ([usuario, email, derechohabiente, alta, sintomas].includes('')) {
+
+            //Si hay un campo vacio cambia el estado de error a true para mostrar el componente Error
             return setError(true);
         }
 
+        //Si todos los campos estan llenos deja oculto el componente de Error
         setError(false);
 
+        //Asigna un id unico a cada registro para simular una bd
         const generarId = () => {
             const random = Math.random().toString(36).substring(2);
             const date = Date.now().toString(36);
@@ -27,8 +42,8 @@ const Formulario = ({ pacientes, setPacientes }) => {
             return random + date;
         }
 
+
         const objPacientes = {
-            id: generarId(),
             usuario,
             email,
             derechohabiente,
@@ -36,8 +51,27 @@ const Formulario = ({ pacientes, setPacientes }) => {
             sintomas
         }
 
-        setPacientes([...pacientes, objPacientes]);
+        if (paciente.id) {
+            //Edita el registro de un paciente ya existente
 
+            objPacientes.id = paciente.id;
+            const pacienteActualizado = pacientes.map(
+
+                pacienteNuevo => (pacienteNuevo.id === paciente.id ? objPacientes : pacienteNuevo));
+
+            //Llama al cambio de estado del array de pacientes y asigna el paciente actualizado
+            setPacientes(pacienteActualizado);
+
+            //Reinicia el estado del objeto paciente
+            setPaciente({});
+
+        } else {
+            //Agrega un nuevo registro
+            objPacientes.id = generarId();
+            setPacientes([...pacientes, objPacientes]);
+        }
+
+        //Reinicia el form
         setNombre('');
         setEmail('');
         setDerechohabiente('');
@@ -106,11 +140,12 @@ const Formulario = ({ pacientes, setPacientes }) => {
                     />
                     {error && <Error><p>* Debes llenar todos los campos</p></Error>}
                 </div>
-                <input
-                    className="w-full bg-indigo-600 p-2 my-2 hover:bg-indigo-800 rounded-lg text-white cursor-pointer"
+                <button
+                    className="w-full uppercase bg-indigo-600 p-2 my-2 hover:bg-indigo-800 rounded-lg text-white cursor-pointer"
                     type="submit"
-                    value="Agregar Paciente">
-                </input>
+                >
+                    {paciente.id ? 'Editar Paciente' : 'Agregar Paciente'}
+                </button>
             </form >
         </div >
     )

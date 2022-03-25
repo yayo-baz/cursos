@@ -2,9 +2,9 @@ const Error = ({ children }) => {
 
 
     return (
-        <p className="text-red-500 p-3">
+        <span className="text-red-500 p-3">
             {children}
-        </p>
+        </span>
     )
 }
 

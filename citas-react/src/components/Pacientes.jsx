@@ -1,4 +1,32 @@
-const Pacientes = ({ paciente }) => {
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const Pacientes = ({ paciente, setPaciente, elimina }) => {
+
+    const handleElimina = () => {
+
+        const alerta = withReactContent(Swal);
+
+        alerta.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                alerta.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                elimina(paciente.id)
+            }
+        })
+    }
+
     return (
         <div className="bg-white p-5 m-10 shadow-md rounded-lg">
             <p className="font-black mb-3 uppercase">
@@ -31,6 +59,17 @@ const Pacientes = ({ paciente }) => {
                     {paciente.sintomas}
                 </span>
             </p>
+
+            <div className="flex justify-between">
+                <button className="py-2 px-10 bg-indigo-600 text-white rounded-lg hover:bg-indigo-800 font-bold uppercase
+                " onClick={() => setPaciente(paciente)}>
+                    Editar
+                </button>
+                <button className="py-2 px-10 bg-red-600 text-white rounded-lg hover:bg-red-800 font-bold uppercase"
+                    onClick={handleElimina}>
+                    Eliminar
+                </button>
+            </div>
         </div>
     )
 }

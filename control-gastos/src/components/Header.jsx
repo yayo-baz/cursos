@@ -1,7 +1,7 @@
 import NewEstimate from "./NewEstimate"
 import ControlEstimate from "./ControlEstimate"
 
-const Header = ({ presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto }) => {
+const Header = ({ presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto, gastos }) => {
 
 
 
@@ -10,7 +10,7 @@ const Header = ({ presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPre
             <h1>Calculador de presupuesto</h1>
 
             {isValidPresupuesto ?
-                <ControlEstimate presupuesto={presupuesto} />
+                <ControlEstimate gastos={gastos} presupuesto={presupuesto} />
                 :
                 <NewEstimate
                     presupuesto={presupuesto}

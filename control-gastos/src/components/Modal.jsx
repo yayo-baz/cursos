@@ -66,9 +66,13 @@ const Modal = ({ setModal, styles, setStyles, guardarGasto }) => {
                         onChange={e => setCategoria(e.target.value)}
                     >
                         <option value="">-- Selecciona una Categoría --</option>
-                        <option value="necesarios">Necesarios</option>
                         <option value="ahorros">Ahorros</option>
-                        <option value="ocio">No necesarios</option>
+                        <option value="casa">Casa</option>
+                        <option value="comida">Comida</option>
+                        <option value="gastos">Gastos</option>
+                        <option value="ocio">Ocio</option>
+                        <option value="salud">Salud</option>
+                        <option value="suscripciones">Suscripciones</option>
                     </select>
                 </div>
                 {mensaje && <Mensaje type='error'>{mensaje}</Mensaje>}

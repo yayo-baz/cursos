@@ -1,7 +1,9 @@
 
 import { useState } from 'react'
 import Header from './components/Header'
-import Modal from './components/Modal';
+import Modal from './components/Modal'
+import List from './components/List'
+import { generarId } from './helpers/index'
 import IconAdd from './img/nuevo-gasto.svg'
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
 
   const [modal, setModal] = useState(false);
   const [styles, setStyles] = useState(false);
+
+  const [gastos, setGastos] = useState([]);
 
   /* Declaracion de hooks useEffect - Se ejecutan en orden de declaracion*/
 
@@ -25,6 +29,20 @@ function App() {
     }, 1000);
   }
 
+  const guardarGasto = gasto => {
+
+    gasto.id = generarId();
+
+    setGastos([...gastos, gasto]);
+
+    setStyles(false);
+
+    setTimeout(() => {
+      setModal(false);
+    }, 700);
+
+  }
+
   return (
     <div>
       <Header
@@ -35,12 +53,23 @@ function App() {
       />
 
       {isValidPresupuesto &&
-        (<div className='nuevo-gasto'>
-          <img src={IconAdd} alt="add"
-            onClick={handleAdd} />
-        </div>)}
+        (
+          <>
+            <main>
+              <List gastos={gastos} />
+            </main>
+            <div className='nuevo-gasto'>
+              <img src={IconAdd} alt="add"
+                onClick={handleAdd} />
+            </div>
+          </>
+        )}
 
-      {modal && <Modal setModal={setModal} styles={styles} setStyles={setStyles} />}
+      {modal && <Modal
+        setModal={setModal}
+        styles={styles}
+        setStyles={setStyles}
+        guardarGasto={guardarGasto} />}
     </div>
   )
 }

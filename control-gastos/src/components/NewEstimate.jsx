@@ -4,6 +4,7 @@ import Mensaje from "./Mensaje";
 const NewEstimate = ({ presupuesto, setPresupuesto, setIsValidPresupuesto }) => {
 
     const [mensaje, setMensaje] = useState('');
+  
 
     const handlePresupuesto = (e) => {
         e.preventDefault();

@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react"
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
-const ControlEstimate = ({ presupuesto, gastos }) => {
+const ControlEstimate = ({ presupuesto, setPresupuesto, gastos, setGastos, setIsValidPresupuesto }) => {
 
     const [disponible, setDisponible] = useState(0);
     const [gastado, setGastado] = useState(0);
+
+    const [porcentaje, setPorcentaje] = useState(0);
+
 
     const formatAmount = (amount) => {
         return amount.toLocaleString('en-US', {
@@ -20,21 +25,42 @@ const ControlEstimate = ({ presupuesto, gastos }) => {
 
         const totalDisponible = presupuesto - totalGastado;
 
+        const totalPorcentaje = ((presupuesto - totalDisponible) / presupuesto * 100).toFixed(2);
+
         setGastado(totalGastado);
         setDisponible(totalDisponible);
+        setPorcentaje(totalPorcentaje);
 
     }, [gastos]);
+
+    const handleResetApp = () => {
+        const resultado = confirm('¿Deseas reiniciar el presupuesto de gastos?');
+
+        if (resultado) {
+            setGastos([]);
+            setPresupuesto(0);
+            setIsValidPresupuesto(false);
+        }
+    }
 
     return (
         <div className="contenedor-presupuesto contenedor sombra dos-columnas">
             <div>
-                <p>Gráfica aquí</p>
+                <CircularProgressbar
+                    value={porcentaje}
+                    text={`${porcentaje}%`} />;
             </div>
             <div className="contenido-presupuesto">
+                <button
+                    onClick={handleResetApp}
+                    className="reset-app"
+                    type="button">
+                    Reiniciar Presupuesto
+                </button>
                 <p>
                     <span>Presupuesto: </span> {formatAmount(presupuesto)}
                 </p>
-                <p>
+                <p className={`${disponible < 0 ? 'negativo' : ''}`}>
                     <span>Disponible: </span> {formatAmount(disponible)}
                 </p>
                 <p>

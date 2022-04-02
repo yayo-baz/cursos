@@ -1,21 +1,29 @@
-import TextField from '@mui/material/TextField';
+import { TextField, makeStyles } from '@material-ui/core'
 
 const TextArea = ({ id, name, placeholder, texto }) => {
 
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            '& .MuiTextField-root': {
+                margin: theme.spacing(1),
+                width: '25ch',
+            },
+        },
+    }));
+
+    const classes = useStyles();
+
     return (
-        <div>
-            <div>
-                <TextField
-                    id={id}
-                    name={name}
-                    label={id}
-                    defaultValue={texto}
-                    placeholder={placeholder}
-                    multiline
-                    rows={6}
-                />
-            </div>
-        </div>
+        <TextField
+            id={id}
+            name={name}
+            label={id}
+            multiline
+            rows={6}
+            defaultValue={texto}
+            placeholder={placeholder}
+            variant="outlined"
+        />
     )
 }
 

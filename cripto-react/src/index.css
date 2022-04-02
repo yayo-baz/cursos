@@ -1,0 +1,10 @@
+body {
+  background-image: url("images/wallpaper.jpg");
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  -moz-border-image: url("img/fondo.jpg") 0;
+  height: 100vh;
+  overflow-y: hidden;
+}

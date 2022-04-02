@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import TextArea from "./components/TextArea";
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
+import Content from "./components/Content";
+import Navbar from "./components/Navbar";
+import Menu from "./components/Menu";
+import { makeStyles } from '@material-ui/core'
 
 function App() {
 
@@ -18,13 +18,6 @@ function App() {
 
   const { texto } = variables
 
-  const onChange = (e) => {
-    setVariables({
-      ...variables,
-      [e.target.name]: e.target.value
-    })
-  }
-
   const onChangeObserva2 = e => {
     let expNopermitida = new RegExp('[{}|`]');
     let expMenos = new RegExp("'");
@@ -38,26 +31,54 @@ function App() {
     }
   };
 
-  return (
-    <div className="App">
-      <CssBaseline />
-      <Container maxWidth="sm">
-        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh', textAlign: 'center', paddingTop: '2rem' }} >
-          <TextArea
-            id="Observacion-1"
-            placeholder="Observación"
-            onChange={onChangeObserva2}
-            texto={observacion} />
-          <br />
-          <TextArea
-            id="Observacion-2"
-            placeholder="Ejemplo texto"
-            onChange={onChange}
-            texto={texto}
-          />
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+    },
+    tooolbar: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.default,
+      padding: theme.spacing(10),
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+  }));
 
-        </Box>
-      </Container>
+  const classes = useStyles();
+
+
+  const [abrir, setAbrir] = useState(false);
+
+  const handleOpen = () => {
+    setAbrir(!abrir);
+  };
+
+  const handleChange = (e) => {
+    setVariables({
+      ...variables,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  return (
+    <div className={classes.root}>
+      <Navbar handleOpen={handleOpen} />
+      <Menu
+        variant="temporary"
+        open={abrir}
+        onClose={handleOpen}
+      />
+      <div className={classes.content}>
+        <div className={classes.toolbar}></div>
+        <Content handleChange={handleChange}
+          observacion={observacion}
+          variables={variables}
+          setVariables={setVariables}
+          setObservacion={setObservacion}
+          onChangeObserva2={onChangeObserva2}
+        />
+      </div>
     </div >
   );
 }

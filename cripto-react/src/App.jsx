@@ -1,25 +1,37 @@
-import { useState } from 'react'
-import './App.css'
-import { Typography, makeStyles } from '@material-ui/core';
+import React from 'react'
+import { Typography, makeStyles, Grid } from '@material-ui/core';
+import CriptoForm from './components/CriptoForm';
+import './index.css'
 
 function App() {
 
-  const useStyle = makeStyles({
+  const useStyle = makeStyles((theme) => ({
     title: {
       color: 'white',
       textAlign: 'center',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      margin: '25px'
     }
-  });
+  }));
 
   const classes = useStyle();
 
   return (
-    <div>
-      <Typography variant="h1" className={classes.title} paragraph>
-        Cotiza Criptomonedas al instante
-      </Typography>
-    </div>
+    <>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Typography variant="h3" className={classes.title}>
+            Cotiza Criptomonedas al instante
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <CriptoForm />
+        </Grid>
+        <Grid item xs={6}>
+
+        </Grid>
+      </Grid>
+    </>
   )
 }
 
